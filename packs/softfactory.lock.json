@@ -1,0 +1,9 @@
+{
+  "schema": 1,
+  "algorithm": "sha256-framed-v1",
+  "suite_id": "softfactory-core",
+  "suite_version": "1.0.0",
+  "suite_sha256": "f71e054c8765444f42b06b20d35f1c28d1a1be0b92bd72e80b24d3ab2bceeb80",
+  "files": [],
+  "definition_sha256": "becf54b8160a4f6583e5fb080be4300d540a6c3909b50ad1d8186a1512375f6c"
+}

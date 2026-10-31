@@ -1,0 +1,12 @@
+# Generated artifacts must be byte-identical across platforms (lock digests cover them).
+*.jsonl text eol=lf
+*.toml text eol=lf
+*.json text eol=lf
+*.sql text eol=lf
+tests/fixtures/** linguist-vendored
+fixtures/** linguist-vendored
+packs/** linguist-vendored
+evals/** linguist-vendored
+out/** linguist-vendored
+assay.toml linguist-vendored
+*.ps1 linguist-vendored

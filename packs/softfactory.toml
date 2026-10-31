@@ -1,0 +1,104 @@
+[suite]
+id = "softfactory-core"
+version = "1.0.0"
+description = "Soft Factory deterministic assertion suite: schema, pointers, limits, secrets, exec, in-memory SQL and RLS"
+target = "tools/agent-harness"
+
+[strata]
+primary = "difficulty"
+
+[strata.weights]
+critical = 0.50
+core = 0.35
+hygiene = 0.15
+
+[[cases]]
+id = "result-contract"
+title = "Agent harness result.json contract adheres to schema"
+stratum = "critical"
+intent = "schema_verification"
+description = "Validates that result.json strictly conforms to the JSON Schema Draft 2020-12 contract"
+
+[[cases.checks]]
+id = "schema_valid"
+weight = 1.0
+severity = "blocker"
+why = "A broken result.json crashes downstream orchestrators and task boards"
+check = { kind = "json_schema", path = "fixtures/schema/sample.result.json", schema_path = "fixtures/schema/result.schema.json" }
+
+[[cases.checks]]
+id = "required_envelope_pointers"
+weight = 1.0
+severity = "blocker"
+why = "Ensures status, summary, and next_actions pointers exist and are non-empty"
+check = { kind = "required_fields", path = "fixtures/schema/sample.result.json", pointers = ["/status", "/summary", "/next_actions", "/artifacts"], allow_empty_strings = false }
+
+[[cases]]
+id = "typography-and-limits"
+title = "Output adheres to length bounds and zero-em-dash rule"
+stratum = "hygiene"
+intent = "typography"
+description = "Validates length bounds, token estimates, and ensures zero em-dashes or en-dashes"
+
+[[cases.checks]]
+id = "no_em_dash_typography"
+weight = 1.0
+severity = "blocker"
+why = "Enforces TechTide typography rule: zero em-dashes and zero en-dashes across all docs and output"
+check = { kind = "length_limits", path = "fixtures/schema/sample.result.json", min_chars = 10, max_chars = 5000, forbid_em_dash = true }
+
+[[cases]]
+id = "secret-and-path-firewall"
+title = "Zero secrets or absolute host paths in output artifacts"
+stratum = "critical"
+intent = "security"
+description = "Verifies that tokens and absolute local user paths are absent from evidence"
+
+[[cases.checks]]
+id = "secret_firewall_pass"
+weight = 1.0
+severity = "blocker"
+why = "Secrets in output cause credential revocation cascades and security breaches"
+check = { kind = "no_secret_leak", path = "fixtures/schema/sample.result.json", forbid_absolute_host_paths = true }
+
+[[cases]]
+id = "sql-engine-test"
+title = "In-memory SQL test database query execution"
+stratum = "core"
+intent = "database"
+description = "Executes schema DDL, seeds data, and asserts on COUNT(*) without external Docker dependencies"
+
+[[cases.checks]]
+id = "sql_query_count"
+weight = 1.0
+severity = "blocker"
+why = "Verifies data persistence and query semantics in test harness"
+check = { kind = "sql_query", schema_sql = "fixtures/sql/schema.sql", seed_sql = "fixtures/sql/seed.sql", query = "SELECT COUNT(*) FROM tasks WHERE status = 'done';", expected_rows = 1, expected_first_cell = "3" }
+
+[[cases]]
+id = "sql-rls-guard"
+title = "Supabase/PostgreSQL Row-Level Security policy compliance"
+stratum = "critical"
+intent = "security"
+description = "Audits migration for table RLS activation and forbids permissive USING (true)"
+
+[[cases.checks]]
+id = "rls_policies_verified"
+weight = 1.0
+severity = "blocker"
+why = "Unprotected tables or permissive USING (true) cause cross-tenant data leaks"
+check = { kind = "sql_rls_policy", migration_path = "fixtures/sql/migration_rls.sql", require_rls_on_all_tables = true, forbid_permissive_true = true }
+
+[[cases]]
+id = "model-judge-reservation"
+title = "Model-based grader boundary"
+stratum = "core"
+intent = "judge_boundary"
+description = "Explicitly records that deterministic code checks handled the verification floor"
+
+[[cases.checks]]
+id = "model_judge_bypassed"
+weight = 1.0
+severity = "graded"
+why = "Zero LLM calls required because deterministic code assertions verified all invariants"
+check = { kind = "model_judge_reservation", rubric = "Assess overall code clarity only if deterministic assertions pass", reason_code_cannot_check = "Code already fully verified deterministically" }

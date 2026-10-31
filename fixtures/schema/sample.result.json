@@ -1,0 +1,11 @@
+{
+  "status": "success",
+  "summary": "Verified all 6 deterministic assertion engines and locked SHA-256 digests",
+  "next_actions": [
+    "run assay check --suite assay.toml"
+  ],
+  "artifacts": [
+    "packs/softfactory.toml",
+    "fixtures/schema/result.schema.json"
+  ]
+}

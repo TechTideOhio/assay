@@ -1,0 +1,3 @@
+# Deterministic build & test settings for Windows and CI
+[profile.test]
+debug = 0

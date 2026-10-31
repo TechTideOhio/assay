@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "HarnessResultEnvelope",
+  "type": "object",
+  "required": ["status", "summary", "next_actions", "artifacts"],
+  "additionalProperties": true,
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": ["success", "warning", "error"]
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 1000
+    },
+    "next_actions": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "artifacts": {
+      "type": "array",
+      "items": { "type": "string", "format": "relative-path" }
+    }
+  }
+}
