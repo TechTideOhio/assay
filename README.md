@@ -10,7 +10,7 @@
 [![Rust: 2021 / 1.82+](https://img.shields.io/badge/Rust-2021%20%2F%201.82%2B-orange.svg)](Cargo.toml)
 [![Zero-FFI](https://img.shields.io/badge/Dependencies-Zero--FFI%20Pure%20Rust-purple.svg)](Cargo.toml)
 
-[Quickstart](#60-second-quickstart) | [Core Capabilities](#core-capabilities) | [Architecture](#architecture) | [The Quartet](#the-complete-tideos-eval-kit-quartet) | [Contributing](CONTRIBUTING.md)
+[Quickstart](#60-second-quickstart) | [Core Capabilities](#core-capabilities) | [Architecture](#architecture) | [The Complete TideOS Eval Kit](#the-complete-tideos-eval-kit) | [Contributing](CONTRIBUTING.md)
 
 </div>
 
@@ -43,14 +43,18 @@ Most AI evaluation frameworks default immediately to LLM-as-a-judge prompts that
 
 ---
 
-## The Complete TideOS Eval Kit Quartet
+## The Complete TideOS Eval Kit
 
-| Tool | Focus & Role | GitHub Repository | Latest Release | Language Badge | CI & Binaries |
-|---|---|---|---|---|---|
-| **Tool 1: reval** | Execution, quality gates, trace error analysis, sentinel watcher, OpenTelemetry spans, Bayesian causal graph | TechTideOhio/reval | v0.2.0 | 100.0% Rust (206 KB) | 4 Binaries (Linux, macOS ARM/Intel, Windows) |
-| **Tool 2: gild** | Golden ground-truth schema, stratification weights, check rubrics, cryptographic `gild.lock.json` | TechTideOhio/gild | v0.1.0 | 100.0% Rust (50 KB) | 4 Binaries (Linux, macOS ARM/Intel, Windows) |
-| **Tool 3: tessel** | Synthetic input generation from dimension tuples, combinatorial pairwise covering arrays, SplitMix64 PRNG | TechTideOhio/tessel | v0.1.0 | 100.0% Rust (83 KB) | 4 Binaries (Linux, macOS ARM/Intel, Windows) |
-| **Tool 4: assay** | Deterministic assertions first: JSON schema, pointers, limits, secrets, exec, in-memory SQL/RLS engine | TechTideOhio/assay | v0.1.0 | 100.0% Rust (~140 KB) | 4 Binaries (Linux, macOS ARM/Intel, Windows) |
+| # | Tool | Crate | Release Binary | Core Responsibility |
+|---|---|---|---|---|
+| **1** | **`reval`** | `reval` | `2.07 MB` | **Trace Error Analysis, Gating & MCP Server** |
+| **2** | **`gild`** | `gild` | `2.46 MB` | **Golden Dataset Governance & Stratification** |
+| **3** | **`tessel`** | `tessel-eval` | `1.97 MB` | **Combinatorial Synthetic Scenario Generator** |
+| **4** | **`assay`** | `assay-eval` | `2.09 MB` | **Deterministic Assertions First & In-Memory RLS** |
+| **5** | **`tide-rill`** | `tide-rill` | `1.54 MB` | **Offline Retrieval Quality & Answer Faithfulness** |
+| **6** | **`keel`** | `keel-eval` | `1.91 MB` | **Agent Trajectory Alignment & Step Efficiency (14 vs 3 calls)** |
+| **7** | **`temper`** | `temper-eval` | `0.89 MB` | **Multi-Trial Reliability (pass@k vs pass^k at Real Temperature)** |
+| **8** | **`parley`** | `parley-eval` | `1.77 MB` | **Simulated Users for Multi-Turn State, Memory & Policy Evals** |
 
 ---
 
